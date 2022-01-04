@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Remote Rover - Mission</title>
+    <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+
+    <link rel="stylesheet" href="../css/mission.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <script defer src="../js/app.js"></script>
+
+</head>
+<body>
+
+    <div class="main-container">
+        <!--MAPA-->
+        <div class="map-container container-fluid content-wrapper d-flex align-items-center justify-content-center flex-column">
+            <div class="row col-12">
+                <div class="card shadow p-0">
+                    <!--Titulo-->
+                    <div class="card-header py-2 d-flex flex-row align-items-center justify-content-center">
+                        <div class="col-md-12 text-center grey">
+                            <p class="p-text">Planet prototype. Walk around to get more information about it.</p>
+                        </div>
+                    </div>
+                    <!--Contenido-->
+                    <div class="card-body d-flex justify-content-center flex-row">
+                        <div class="m-0 mb-2 row">
+                            <div id="map" class="col-md-12">
+                            </div>
+                        </div>  
+                    </div>
+                    <div class="card-arrow">
+                        <div class="card-arrow-top-left"></div>
+                        <div class="card-arrow-top-right"></div>
+                        <div class="card-arrow-bottom-left"></div>
+                        <div class="card-arrow-bottom-right"></div>
+                    </div>
+                </div>
+            </div>   
+        </div>
+
+        <!--PANEL LATERAL-->
+        <div class="sidebar navbar-nav">
+
+            <!--Movimiento-->
+            <div id="movement" class="col-12 p-4">
+                <div class="card shadow">
+                    <!--Titulo-->
+                    <div class="card-header py-2 d-flex flex-row align-items-center justify-content-center">
+                        <h2 class="m-0 font-weight-bold grey">Movement</h2>
+                    </div>
+                    <!--Contenido-->
+                    <div class="card-body">
+                        <!--Botones movimiento-->
+                        <div class="col-12 m-0 mb-2 row">
+                            <div class="col-6 pb-2 d-flex justify-content-center">
+                                <div class="action-buttons">
+                                    <button type="button" class="button button-up" onclick="addMovement(0,-1)">
+                                        <img src="../images/arrow-down.svg" class="arrow-up" alt="arrow"/>
+                                    </button>
+                                    <button type="button" class="button button-down " onclick="addMovement(0,1)">
+                                        <img src="../images/arrow-down.svg" class="arrow-down" alt="arrow"/>
+                                    </button>
+                                    <button type="button" class="button button-left" onclick="addMovement(-1,0)">
+                                        <img src="../images/arrow-down.svg" class="arrow-left" alt="arrow"/>
+                                    </button>
+                                    <button type="button" class="button button-right" onclick="addMovement(1,0)">
+                                        <img src="../images/arrow-down.svg" class="arrow-right" alt="arrow"/>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="col-6 pb-2 d-flex justify-content-center align-items-center flex-column">
+                                <p class="p-text">Select a sequence of movements and press the button to move!</p>
+                                <button type="button" class="button-green btn-lg" onclick="moveRover()">Move</button>
+                            </div>
+                        </div>
+                       
+                        <!--Secuencia movimiento-->
+                        <div id="movement-sequence" class="col-12 m-0 row item-grid">
+                            <div class="movement-sequence-instruction col-2 d-flex justify-content-center align-items-center">
+                                <img src="../images/arrow-down.svg" class="d-none" alt="arrow"/>
+                            </div>
+                            <div class="movement-sequence-instruction col-2 d-flex justify-content-center align-items-center">
+                                <img src="../images/arrow-down.svg" class="d-none" alt="arrow"/>
+                            </div>
+                            <div class="movement-sequence-instruction col-2 d-flex justify-content-center align-items-center">
+                                <img src="../images/arrow-down.svg" class="d-none" alt="arrow"/>
+                            </div>
+                            <div class="movement-sequence-instruction col-2 d-flex justify-content-center align-items-center">
+                                <img src="../images/arrow-down.svg" class="d-none" alt="arrow"/>
+                            </div>
+                            <div class="movement-sequence-instruction col-2 d-flex justify-content-center align-items-center">
+                                <img src="../images/arrow-down.svg" class="d-none" alt="arrow"/>
+                            </div>
+                            <div class="movement-sequence-instruction col-2 d-flex justify-content-center align-items-center">
+                                <img src="../images/arrow-down.svg" class="d-none" alt="arrow"/>
+                            </div>
+                        </div>  
+                    </div>
+                    <div class="card-arrow">
+                        <div class="card-arrow-top-left"></div>
+                        <div class="card-arrow-top-right"></div>
+                        <div class="card-arrow-bottom-left"></div>
+                        <div class="card-arrow-bottom-right"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <!--Obstaculo encontrado-->
+            <div id="obstacle" class="col-12 p-4 pt-0">
+                <div class="card shadow">
+                    <!--Titulo-->
+                    <div class="card-header py-2 d-flex flex-row align-items-center justify-content-center">
+                        <h2 class="m-0 font-weight-bold grey">Last obstacle found</h2>
+                    </div>
+                    <!--Contenido-->
+                    <div class="card-body">
+                        <div class="text-center obstacle-img">
+                            <img src="../images/Ground_Tile_01_C.png" id="obstacle-image"/>
+                        </div>
+                        <div class="mt-2 text-center small">
+                            <span class="mr-2 obstacle-name">Move to find obstacles</span>
+                        </div>
+                    </div>
+                    <div class="card-arrow">
+                        <div class="card-arrow-top-left"></div>
+                        <div class="card-arrow-top-right"></div>
+                        <div class="card-arrow-bottom-left"></div>
+                        <div class="card-arrow-bottom-right"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!--Obstaculos encontrados totales-->
+            <div id="relaunch" class="col-12 mb-3 m-0 row d-flex justify-content-center">
+                <div class="col-8">
+                    <button type="button" class="button-green btn-lg" onclick="launch()">Relaunch</button>
+                </div>
+            </div>
+        </div>
+    </div>  
+</body>
+</html>
+
